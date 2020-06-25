@@ -490,9 +490,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
-  #define DEFAULT_Kp 22.2
-  #define DEFAULT_Ki 1.08
-  #define DEFAULT_Kd 114
+  //#define DEFAULT_Kp 22.2
+  //#define DEFAULT_Ki 1.08
+  //#define DEFAULT_Kd 114
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
@@ -503,6 +503,11 @@
   //#define DEFAULT_Kp 63.0
   //#define DEFAULT_Ki 2.25
   //#define DEFAULT_Kd 440
+  
+  // meiner
+  #define DEFAULT_Kp 10.38
+  #define DEFAULT_Ki 0.45
+  #define DEFAULT_Kd 59.91
 
 #endif // PIDTEMP
 
@@ -815,7 +820,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.08  // (mm) Distance from real junction edge
   #define JD_HANDLE_SMALL_SEGMENTS    // Use curvature estimation instead of just the junction angle
                                       // for small segments (< 1mm) with large junction angles (> 135°).
 #endif
