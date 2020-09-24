@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -46,12 +46,14 @@
   #include "msc_sd.h"
 #endif
 
+#include "MarlinSerial.h"
+
 // ------------------------
 // Defines
 // ------------------------
 
 #ifndef STM32_FLASH_SIZE
-  #if defined(MCU_STM32F103RE) || defined(MCU_STM32F103VE)
+  #if EITHER(MCU_STM32F103RE, MCU_STM32F103VE)
     #define STM32_FLASH_SIZE 512
   #else
     #define STM32_FLASH_SIZE 256
@@ -64,17 +66,6 @@
   #else
     #define UsbSerial MarlinCompositeSerial
   #endif
-  #define MSerial1  Serial1
-  #define MSerial2  Serial2
-  #define MSerial3  Serial3
-  #define MSerial4  Serial4
-  #define MSerial5  Serial5
-#else
-  #define MSerial1  Serial
-  #define MSerial2  Serial1
-  #define MSerial3  Serial2
-  #define MSerial4  Serial3
-  #define MSerial5  Serial4
 #endif
 
 #if SERIAL_PORT == 0
@@ -115,12 +106,9 @@
   #else
     #error "SERIAL_PORT_2 must be from -1 to 5. Please update your configuration."
   #endif
-  #define NUM_SERIAL 2
-#else
-  #define NUM_SERIAL 1
 #endif
 
-#ifdef DGUS_SERIAL
+#ifdef DGUS_SERIAL_PORT
   #if DGUS_SERIAL_PORT == 0
     #error "DGUS_SERIAL_PORT cannot be 0. (Port 0 does not exist.) Please update your configuration."
   #elif DGUS_SERIAL_PORT == SERIAL_PORT
@@ -255,8 +243,9 @@ static int freeMemory() {
 
 void HAL_adc_init();
 
-#define HAL_START_ADC(pin)  HAL_adc_start_conversion(pin)
+#define HAL_ADC_VREF         3.3
 #define HAL_ADC_RESOLUTION  10
+#define HAL_START_ADC(pin)  HAL_adc_start_conversion(pin)
 #define HAL_READ_ADC()      HAL_adc_result
 #define HAL_ADC_READY()     true
 

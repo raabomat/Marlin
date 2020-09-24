@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #pragma once
 
@@ -81,43 +81,34 @@ typedef int8_t pin_t;
 
 // Serial ports
 #ifdef USBCON
-  #if ENABLED(BLUETOOTH)
-    #define MYSERIAL0 bluetoothSerial
-  #else
-    #define MYSERIAL0 Serial
-  #endif
-  #define NUM_SERIAL 1
+  #define MYSERIAL0 TERN(BLUETOOTH, bluetoothSerial, Serial)
 #else
   #if !WITHIN(SERIAL_PORT, -1, 3)
     #error "SERIAL_PORT must be from -1 to 3. Please update your configuration."
   #endif
-
   #define MYSERIAL0 customizedSerial1
 
   #ifdef SERIAL_PORT_2
     #if !WITHIN(SERIAL_PORT_2, -1, 3)
       #error "SERIAL_PORT_2 must be from -1 to 3. Please update your configuration."
-    #elif SERIAL_PORT_2 == SERIAL_PORT
-      #error "SERIAL_PORT_2 must be different than SERIAL_PORT. Please update your configuration."
     #endif
     #define MYSERIAL1 customizedSerial2
-    #define NUM_SERIAL 2
-  #else
-    #define NUM_SERIAL 1
   #endif
 #endif
 
 #ifdef DGUS_SERIAL_PORT
   #if !WITHIN(DGUS_SERIAL_PORT, -1, 3)
     #error "DGUS_SERIAL_PORT must be from -1 to 3. Please update your configuration."
-  #elif DGUS_SERIAL_PORT == SERIAL_PORT
-    #error "DGUS_SERIAL_PORT must be different than SERIAL_PORT. Please update your configuration."
-  #elif defined(SERIAL_PORT_2) && DGUS_SERIAL_PORT == SERIAL_PORT_2
-    #error "DGUS_SERIAL_PORT must be different than SERIAL_PORT_2. Please update your configuration."
   #endif
   #define DGUS_SERIAL internalDgusSerial
-
   #define DGUS_SERIAL_GET_TX_BUFFER_FREE DGUS_SERIAL.get_tx_buffer_free
+#endif
+
+#ifdef ANYCUBIC_LCD_SERIAL_PORT
+  #if !WITHIN(ANYCUBIC_LCD_SERIAL_PORT, -1, 3)
+    #error "ANYCUBIC_LCD_SERIAL_PORT must be from -1 to 3. Please update your configuration."
+  #endif
+  #define ANYCUBIC_LCD_SERIAL anycubicLcdSerial
 #endif
 
 // ------------------------
@@ -162,6 +153,7 @@ inline void HAL_adc_init() {
   #define HAL_START_ADC(ch) ADCSRB = 0; SET_ADMUX_ADCSRA(ch)
 #endif
 
+#define HAL_ADC_VREF        5.0
 #define HAL_ADC_RESOLUTION 10
 #define HAL_READ_ADC()  ADC
 #define HAL_ADC_READY() !TEST(ADCSRA, ADSC)
