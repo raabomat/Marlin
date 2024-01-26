@@ -25,7 +25,7 @@ set(SCRIPT_BRANCH 1.0.2) #Set to wanted marlin-cmake release tag or branch
 if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/marlin-cmake)
 
 	file(DOWNLOAD https://github.com/tohara/marlin-cmake/archive/${SCRIPT_BRANCH}.tar.gz
-				  ${CMAKE_CURRENT_LIST_DIR}/marlin-cmake-src.tar.gz SHOW_PROGRESS)
+	${CMAKE_CURRENT_LIST_DIR}/marlin-cmake-src.tar.gz SHOW_PROGRESS)
 
 	execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xvf ${CMAKE_CURRENT_LIST_DIR}/marlin-cmake-src.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 
@@ -36,7 +36,7 @@ if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/marlin-cmake)
 endif()
 
 if(WIN32 AND NOT EXISTS ${CMAKE_BINARY_DIR}/make.exe)
-    file(COPY ${CMAKE_CURRENT_LIST_DIR}/marlin-cmake/resources/make.exe DESTINATION ${CMAKE_BINARY_DIR}/)
+	file(COPY ${CMAKE_CURRENT_LIST_DIR}/marlin-cmake/resources/make.exe DESTINATION ${CMAKE_BINARY_DIR}/)
 endif()
 
 set(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/marlin-cmake/modules)
@@ -47,8 +47,8 @@ set(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/marlin-cma
 #  cmake .. -DARDUINO_SDK_PATH="/path/to/arduino-1.x.x"              #
 #====================================================================#
 #set(ARDUINO_SDK_PATH ${CMAKE_CURRENT_LIST_DIR}/arduino-1.6.8)
-#set(ARDUINO_SDK_PATH /home/tom/git/BigBox-Dual-Marlin/ArduinoAddons/Arduino_1.6.x)
-#set(ARDUINO_SDK_PATH  /home/tom/test/arduino-1.6.11)
+#set(ARDUINO_SDK_PATH /Applications/Arduino.app/Contents/Java)
+#set(ARDUINO_SDK_PATH $HOME/ArduinoAddons/Arduino_1.6.x)
 #====================================================================#
 #  Set included cmake files                                          #
 #====================================================================#
@@ -96,8 +96,8 @@ setup_motherboard(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/../../../Marlin)
 #  Include Marlin.ino to compile libs not included in *.cpp files    #
 #====================================================================#
 
-file(GLOB SOURCES "../../../src/*.cpp")
-set(${PROJECT_NAME}_SRCS "${SOURCES};../../../src/Marlin.ino")
+file(GLOB_RECURSE SOURCES "../../../Marlin/*.cpp")
+set(${PROJECT_NAME}_SRCS "${SOURCES};../../../Marlin/Marlin.ino")
 
 #====================================================================#
 #  Define the port for uploading code to the Arduino                 #
@@ -105,9 +105,9 @@ set(${PROJECT_NAME}_SRCS "${SOURCES};../../../src/Marlin.ino")
 #    cmake .. -DUPLOAD_PORT=/dev/ttyACM0                             #
 #====================================================================#
 if(UPLOAD_PORT)
-    set(${PROJECT_NAME}_PORT ${UPLOAD_PORT})
+	set(${PROJECT_NAME}_PORT ${UPLOAD_PORT})
 else()
-    set(${PROJECT_NAME}_PORT /dev/ttyACM0)
+	set(${PROJECT_NAME}_PORT /dev/ttyACM0)
 endif()
 
 #====================================================================#

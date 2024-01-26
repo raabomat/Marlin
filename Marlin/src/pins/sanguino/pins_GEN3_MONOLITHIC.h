@@ -23,13 +23,13 @@
 
 /**
  * Gen3 Monolithic Electronics pin assignments
+ * https://reprap.org/wiki/Generation_3_Electronics
  */
 
 /**
  * Rev B    26 DEC 2016
  *
  * added pointer to a current Arduino IDE extension
- *
  */
 
 /**
@@ -47,12 +47,10 @@
  * Just use the above JSON URL instead of Sparkfun's JSON.
  *
  * Once installed select the Sanguino board and then select the CPU.
- *
  */
 
-#if NOT_TARGET(__AVR_ATmega644P__)
-  #error "Oops! Select 'Sanguino' in 'Tools > Board.'"
-#endif
+#define REQUIRE_MEGA644P
+#include "env_validate.h"
 
 #define BOARD_INFO_NAME "Gen3 Monolithic"
 #define DEBUG_PIN                              0

@@ -23,6 +23,7 @@
 
 /**
  * Arduino Mega with RAMPS v1.3 pin assignments
+ * ATmega2560, ATmega1280
  *
  * Applies to the following boards:
  *
@@ -31,7 +32,6 @@
  *  RAMPS_13_EFF (Extruder, Fan, Fan)
  *  RAMPS_13_EEF (Extruder, Extruder, Fan)
  *  RAMPS_13_SF  (Spindle, Controller Fan)
- *
  */
 
 #ifndef BOARD_INFO_NAME
